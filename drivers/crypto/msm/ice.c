@@ -1204,7 +1204,7 @@ static void qcom_ice_debug(struct platform_device *pdev)
 		goto out;
 	}
 
-	pr_err("%s: =========== REGISTER DUMP (%pK)===========\n",
+	pr_err("%s: 
 			ice_dev->ice_instance_type, ice_dev);
 
 	pr_err("%s: ICE Control: 0x%08x | ICE Reset: 0x%08x\n",
@@ -1534,7 +1534,6 @@ struct platform_device *qcom_ice_get_pdevice(struct device_node *node)
 			break;
 		}
 	}
-
 	if(ice_pdev)
 		pr_info("%s: matching platform device %pK\n", __func__, ice_pdev);
 out:
