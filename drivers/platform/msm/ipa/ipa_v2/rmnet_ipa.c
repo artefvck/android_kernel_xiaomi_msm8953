@@ -2655,9 +2655,8 @@ int rmnet_ipa_query_tethering_stats(struct wan_ioctl_query_tether_stats *data,
 		/* prevent string buffer overflows */
 		data->upstreamIface[IFNAMSIZ-1] = '\0';
 		data->tetherIface[IFNAMSIZ-1] = '\0';
-	} else if (reset == false) {
-		/* only reset can have data == NULL*/
-		IPAWANERR("query without allocate tether_stats strucutre\n");
+	} else if (reset != false) {
+		/* Data can be NULL for reset stats, checking reset != False */
 		return -EINVAL;
 	}
 
