@@ -3231,6 +3231,10 @@ static const struct snd_kcontrol_new ext_ec_ref_mux_ul2 =
 	SOC_DAPM_ENUM_EXT("AUDIO_REF_EC_UL2 MUX Mux",
 		msm_route_ec_ref_rx_enum[0],
 		msm_routing_ec_ref_rx_get, msm_routing_ec_ref_rx_put);
+static const struct snd_kcontrol_new ext_ec_ref_mux_ul3 =
+	SOC_DAPM_ENUM_EXT("AUDIO_REF_EC_UL3 MUX Mux",
+		msm_route_ec_ref_rx_enum[0],
+		msm_routing_ec_ref_rx_get, msm_routing_ec_ref_rx_put);
 
 static const struct snd_kcontrol_new ext_ec_ref_mux_ul3 =
 	SOC_DAPM_ENUM_EXT("AUDIO_REF_EC_UL3 MUX Mux",
@@ -9081,6 +9085,9 @@ static const struct snd_kcontrol_new sec_mi2s_rx_port_mixer_controls[] = {
 	SOC_SINGLE_EXT("AUX_PCM_UL_TX", MSM_BACKEND_DAI_SECONDARY_MI2S_RX,
 	MSM_BACKEND_DAI_AUXPCM_TX, 1, 0, msm_routing_get_port_mixer,
 	msm_routing_put_port_mixer),
+	SOC_SINGLE_EXT("INTERNAL_FM_TX", MSM_BACKEND_DAI_SECONDARY_MI2S_RX,
+	MSM_BACKEND_DAI_INT_FM_TX, 1, 0, msm_routing_get_port_mixer,
+	msm_routing_put_port_mixer),
 };
 
 static const struct snd_kcontrol_new lsm1_mixer_controls[] = {
@@ -13427,7 +13434,7 @@ static const struct snd_soc_dapm_route intercon[] = {
 	{"PRI_MI2S_TX", NULL, "BE_IN"},
 	{"TERT_MI2S_TX", NULL, "BE_IN"},
 	{"SEC_MI2S_TX", NULL, "BE_IN"},
-	{"SENARY_MI2S_TX", NULL, "BE_IN" },
+	{"SENARY_TX", NULL, "BE_IN" },
 	{"SLIMBUS_0_TX", NULL, "BE_IN" },
 	{"SLIMBUS_1_TX", NULL, "BE_IN" },
 	{"SLIMBUS_2_TX", NULL, "BE_IN" },
