@@ -1188,11 +1188,13 @@ VOS_STATUS wlan_hdd_get_snr(hdd_adapter_t *pAdapter, v_S7_t *snr)
    else
    {
        /* request was sent -- wait for the response */
-       ret = hdd_request_wait_for_response(request);
-       if (ret) {
-           hddLog(VOS_TRACE_LEVEL_ERROR,
-                  FL("SME timed out while retrieving SNR"));
-           /* we'll now returned a cached value below */
+       lrc = wait_for_completion_interruptible_timeout(&context.completion,
+                                    msecs_to_jiffies(WLAN_WAIT_TIME_STATS));
+       if (lrc <= 0)
+       {
+          hddLog(VOS_TRACE_LEVEL_ERROR, "%s: SME %s while retrieving SNR",
+                 __func__, (0 == lrc) ? "timeout" : "interrupt");
+          /* we'll now returned a cached value below */
        } else {
            /* update the adapter with the fresh results */
            priv = hdd_request_priv(request);
