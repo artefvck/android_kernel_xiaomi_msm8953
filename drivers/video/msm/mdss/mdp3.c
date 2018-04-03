@@ -2073,6 +2073,18 @@ err_detach:
 err_put:
 	dma_buf_put(data->srcp_dma_buf);
 	return ret;
+err_unmap:
+	dma_buf_unmap_attachment(data->srcp_attachment, data->srcp_table,
+			mdss_smmu_dma_data_direction(DMA_BIDIRECTIONAL));
+	dma_buf_detach(data->srcp_dma_buf, data->srcp_attachment);
+	dma_buf_put(data->srcp_dma_buf);
+
+	if (client ==  MDP3_CLIENT_PPP || client == MDP3_CLIENT_DMA_P) {
+		vfree(data->tab_clone->sgl);
+		kfree(data->tab_clone);
+	}
+	return ret;
+
 }
 
 int mdp3_iommu_enable(int client)
