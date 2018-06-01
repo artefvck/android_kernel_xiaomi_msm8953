@@ -1,5 +1,4 @@
 /* Copyright (c) 2007, 2013-2014, 2016-2018, The Linux Foundation. All rights reserved.
- *
  * Copyright (C) 2007 Google Incorporated
  *
  * This software is licensed under the terms of the GNU General Public
@@ -1713,9 +1712,8 @@ int mdp3_ppp_parse_req(void __user *p,
 			(mfd->panel.type == MDP3_DMA_OUTPUT_SEL_DSI_CMD)) {
 		rc = mdp3_session->dma->wait_for_dma(mdp3_session->dma,
 					mdp3_session->intf);
-		if (!rc) {
+		if (rc) {
 			pr_err("secure dma done not completed\n");
-			rc = -ETIMEDOUT;
 			goto parse_err_2;
 		}
 		mdp3_session->transition_state = SECURE_TO_NONSECURE;

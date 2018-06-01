@@ -1,5 +1,5 @@
-/* Copyright (c) 2013-2014, 2016, 2018, The Linux Foundation. All rights reserved.
- *
+/* Copyright (c) 2013-2014, 2016, The Linux Foundation. All rights reserved.
+ * Copyright (c) 2017-2018, The Linux Foundation. All rights reserved.
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
  * only version 2 as published by the Free Software Foundation.
@@ -722,7 +722,7 @@ static int mdp3_handle_null_commit(struct mdp3_dma *dma, struct mdp3_intf *intf)
 retry_vsync:
 	pr_debug("wait for vsync_comp started\n");
 	rc = wait_for_completion_timeout(&dma->vsync_comp,
-			 dma_timeout_value(dma));
+			KOFF_TIMEOUT);
 	if (rc <= 0 && --retry_count) {
 		int vsync = MDP3_REG_READ(MDP3_REG_INTR_STATUS) &
 				(1 << MDP3_INTR_LCDC_START_OF_FRAME);
@@ -742,14 +742,14 @@ return rc;
 static int mdp3_wait_for_dma_comp(struct mdp3_dma *dma, struct mdp3_intf *intf)
 {
 	int vsync_status;
-	int rc = 1;
+	int rc = 0;
 	int retry_count = 2;
 
 	if (intf->active) {
 		ATRACE_BEGIN("mdp3_wait_for_dma_comp");
 retry_dma_done:
 		rc = wait_for_completion_timeout(&dma->dma_comp,
-			 dma_timeout_value(dma));
+			KOFF_TIMEOUT);
 		if (rc <= 0 && --retry_count) {
 			vsync_status = (1 << MDP3_INTR_DMA_P_DONE) &
 					MDP3_REG_READ(MDP3_REG_INTR_STATUS);

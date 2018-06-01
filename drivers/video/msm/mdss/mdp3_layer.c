@@ -225,7 +225,7 @@ static int __mdp3_map_layer_buffer(struct msm_fb_data_type *mfd,
 	if (layer->flags & MDP_LAYER_SECURE_DISPLAY_SESSION)
 		data.flags |=  MDP_SECURE_DISPLAY_OVERLAY_SESSION;
 
-	rc = mdp3_get_img(&img, &data, intf_type);
+	rc = mdp3_get_img(&img, &data, MDP3_CLIENT_DMA_P);
 	if (rc) {
 		pr_err("fail to get overlay buffer\n");
 		goto err;
